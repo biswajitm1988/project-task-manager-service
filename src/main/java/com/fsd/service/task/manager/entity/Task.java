@@ -1,6 +1,7 @@
 package com.fsd.service.task.manager.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,8 +19,8 @@ public class Task {
     @Column(name = "TASK_ID")
     private Long taskId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "PARENT_ID")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="PARENT_ID")
     private ParentTask parentTask;
 
     @Column(name = "TASK")
@@ -38,6 +39,7 @@ public class Task {
     private Date endDate;
 
     @Column(name = "TASK_STATUS")
+    @JsonProperty("isTaskDone")
     private String status;
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -47,6 +49,4 @@ public class Task {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private User user;
-
-
 }

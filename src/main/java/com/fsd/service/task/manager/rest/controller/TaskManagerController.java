@@ -1,5 +1,6 @@
 package com.fsd.service.task.manager.rest.controller;
 
+import com.fsd.service.task.manager.entity.ParentTask;
 import com.fsd.service.task.manager.entity.Task;
 import com.fsd.service.task.manager.service.TaskManagerService;
 import io.swagger.annotations.ApiOperation;
@@ -60,5 +61,30 @@ public class TaskManagerController {
         log.info("TaskManagerController >> deleteTask >> {}", id);
         service.deleteTaskById(id);
         log.info("Task Deleted.");
+    }
+
+    @ApiOperation(value = "Get All Parent Tasks")
+    @GetMapping("/getAllParentTasks")
+    public ResponseEntity<List<ParentTask>> getAllParentTasks() throws Exception {
+        log.info("TaskManagerController >> getAllParentTasks >>");
+        List<ParentTask> allParentTasks = service.getAllParentTasks();
+        return new ResponseEntity<>(allParentTasks, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Add the new parent task into the database and return new parent task.", response = ParentTask.class)
+    @PostMapping("/addParentTask")
+    public ResponseEntity<ParentTask> addParentTask(@RequestBody ParentTask parentTask) throws Exception {
+        log.info("TaskManagerController >> addTask >> {}", parentTask);
+        ParentTask newParentTask = service.saveParentTask(parentTask);
+        log.info("Task Added. New Id {} and task {}",newParentTask.getParentId(), newParentTask);
+        return new ResponseEntity<>(newParentTask, HttpStatus.CREATED);
+    }
+
+    @ApiOperation(value = "Fetches all tasks from the database assigned to specific Project by id.", response = Task.class)
+    @GetMapping("/getTasksByProjectId/{id}")
+    public ResponseEntity<List<Task>> getTasksByProjectId(@PathVariable("id") Long id) throws Exception {
+        log.info("TaskManagerController >> getTasksByProjectId >> ");
+        List<Task> tasks = service.getTasksByProjectId(id);
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 }

@@ -16,9 +16,7 @@ public class ParentTask {
     @Column(name = "PARENT_ID")
     private Long parentId;
 
-    @Column(name = "PARENT_TASK")
+    @Column(name = "PARENT_TASK", unique = true)
     private String parentTaskSummary;
 
-    @OneToMany(mappedBy = "parentTask")
-    private List<Task> task;
 }
