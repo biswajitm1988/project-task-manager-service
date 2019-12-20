@@ -53,11 +53,11 @@ public class TaskManagerServiceTest {
      */
     @Test
     public void testGetTaskById() {
-        Long id =1l;
+        Long id =13l;
         Task task = restTemplate.getForObject(getRootUrl() + "/getTaskById/"+id, Task.class);
 
-        System.out.println(task.getTaskSummary());
         Assert.assertNotNull(task);
+        System.out.println(task);
     }
 
     /**
@@ -91,7 +91,7 @@ public class TaskManagerServiceTest {
      */
     @Test
     public void testUpdateTask() {
-        Long id = 1l;
+        Long id = 13l;
         Task task = restTemplate.getForObject(getRootUrl() + "/getTaskById/" + id, Task.class);
         Task tempTask = new Task();
         BeanUtils.copyProperties(task,tempTask);

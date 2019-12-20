@@ -19,7 +19,7 @@ public class Task {
     @Column(name = "TASK_ID")
     private Long taskId;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name="PARENT_ID")
     private ParentTask parentTask;
 
