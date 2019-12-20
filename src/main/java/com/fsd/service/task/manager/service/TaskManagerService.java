@@ -7,6 +7,7 @@ import com.fsd.service.task.manager.repository.TaskRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -27,11 +28,14 @@ public class TaskManagerService {
         return repository.findAll();
     }
 
+    @Transactional
     public Task saveTask(Task task) {
         log.info("Saving the Task into Database");
         if(task.getParentTask() != null){
             if(StringUtils.isEmpty(task.getParentTask().getParentTaskSummary())){
                 task.setParentTask(null);
+            }else if(StringUtils.isEmpty(task.getParentTask().getParentId())){
+                parentTaskRepository.save(task.getParentTask());
             }
         }
         return repository.save(task);
