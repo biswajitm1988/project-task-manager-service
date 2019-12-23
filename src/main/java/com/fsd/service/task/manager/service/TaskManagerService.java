@@ -46,11 +46,6 @@ public class TaskManagerService {
         return repository.findById(id);
     }
 
-    public void deleteTask(Task task) {
-        log.info("Deleting the Task from Database for {}",task.getTaskId());
-        repository.delete(task);
-    }
-
     public void deleteTaskById(Long id) {
         log.info("Deleting the Task from Database for {}",id);
         repository.deleteById(id);

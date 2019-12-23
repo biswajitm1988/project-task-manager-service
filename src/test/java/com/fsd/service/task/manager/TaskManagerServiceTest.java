@@ -38,9 +38,53 @@ public class TaskManagerServiceTest {
      * using the GET method
      */
     @Test
+    public void test404Error() {
+
+        ResponseEntity<String> response = restTemplate.getForEntity(getRootUrl() + "/get404", String.class);
+
+        System.out.println(response.getStatusCode());
+        Assert.assertEquals(response.getStatusCodeValue(), 404);
+    }
+
+
+        /**
+         * Here we test that we can get all the Tasks in the database
+         * using the GET method
+         */
+    @Test
     public void testGetAllTasks() {
 
         ResponseEntity<List> response = restTemplate.exchange(getRootUrl() + "/getAllTasks",
+                HttpMethod.GET, new HttpEntity<String>(null, new HttpHeaders()), List.class);
+
+        System.out.println(response.getBody().get(0));
+        Assert.assertNotNull(response.getBody());
+        Assert.assertTrue(!response.getBody().isEmpty());
+    }
+
+    /**
+     * Here we test that we can get all the Parent Tasks in the database
+     * using the GET method
+     */
+    @Test
+    public void testGetAllParentTasks() {
+
+        ResponseEntity<List> response = restTemplate.exchange(getRootUrl() + "/getAllParentTasks",
+                HttpMethod.GET, new HttpEntity<String>(null, new HttpHeaders()), List.class);
+
+        System.out.println(response.getBody().get(0));
+        Assert.assertNotNull(response.getBody());
+        Assert.assertTrue(!response.getBody().isEmpty());
+    }
+
+    /**
+     * Here we test that we can get all the Tasks by Project id in the database
+     * using the GET method
+     */
+    @Test
+    public void testGetTasksByProjectId() {
+        Long id =5l;
+        ResponseEntity<List> response = restTemplate.exchange(getRootUrl() + "/getTasksByProjectId/"+5l,
                 HttpMethod.GET, new HttpEntity<String>(null, new HttpHeaders()), List.class);
 
         System.out.println(response.getBody().get(0));
